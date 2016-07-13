@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <style>
+    .con {
+        position: relative;
+        width: 100%;
+     }
+    .btn{
+       background-color: #008CBA;
+       font-size: 12px;
+       color: #FFF;
+       padding: 12px 28px;
+       
+     }
+    .div_btn {
+      position: absolute;
+      left: 320px;
+      width: 300px;
+    }
+	.con2 {
+        position: relative;
+        width: 100%;
+     }
+	.div_tasks {
+		width: 450px;
+		border-width: thin;
+        border-style: solid;
+        border-color: #CCC;
+	 }
+	.btn_del {
+   	    background-color: white;
+		color: red;
+		border: 0px;
+	 }
+	.div_delete {
+	     position: relative;
+		left: 380px;
+		width: 80px;
+	 }
+	.p1{
+	 	font-size: 20px;
+	 	font: bold;
+	 	
+	 }
+	.p2{
+	 	padding-left: 5px;
+	 	font-size: 14px;
+	 	}
+	 
+  </style>
+</head>
+<body>
+
+<div id="content" class="con">
+  <table>
+    <tr>
+      <td>Title</td>
+      <td><input type=text name="task" id="task" size=52></td>
+    </tr>
+    <tr>
+      <td>Content</td>
+      <td><textarea name="comments" id="comments" cols=52 rows="3"> </textarea></td>
+    </tr>
+  </table>
+  <br>
+  <div id="div_btn" class="div_btn">
+    <button onclick="add()" class="btn">ADD TASK</button>
+  </div>
+  <br><br><br>
+  <hr>
+</div>
+
+<div id="myTasks" class="con2">
+	
+</div>
+
+<script>
+var taskID=0;
+function add() {
+    //get myTasks object
+    var myDL = document.getElementById("myTasks");
+
+	//create DIV
+	var y = document.createElement("DIV");
+	y.setAttribute("id", "divTask-"+taskID);
+	y.setAttribute("class", "div_tasks");
+	
+	//TASK NAME
+	var p1 = document.createElement("P");
+	p1.setAttribute("class", "p1");
+	y.appendChild(p1);
+    var txtTask = document.createTextNode(document.getElementById("task").value);
+    p1.appendChild(txtTask);
+	
+	//CONTENT
+	var p2 = document.createElement("P");
+	p2.setAttribute("class", "p2");
+	y.appendChild(p2);
+	var txtContent = document.createTextNode(document.getElementById("comments").value);
+    p2.appendChild(txtContent);
+
+	//HORIZONTAL LINE
+	var hr = document.createElement("HR");
+	y.appendChild(hr);
+	
+	//DIV FOR DELETE BUTTON
+	var d2 = document.createElement("DIV");
+	d2.setAttribute("class", "div_delete");
+	
+	//BUTTON INSIDE DIV_DELETE
+	var bt = document.createElement("BUTTON");
+	bt.setAttribute("class", "btn_del");
+	//Call JS passing TASKID
+	bt.setAttribute("onClick", "del("+taskID+");");
+	d2.appendChild(bt);
+    var txtBt = document.createTextNode("DELETE");
+    bt.appendChild(txtBt);
+	//ADD DIV TO DIV_TASK
+	y.appendChild(d2);
+
+	//ADD TO MAIN TASK DIV
+    myDL.appendChild(y);
+
+	//ADD BR between tasks
+	var br = document.createElement("BR");
+	myDL.appendChild(br);	
+    //increase task counter
+    taskID++;
+}
+
+function del(id) {  
+  var toDelete = document.getElementById("divTask-"+id);
+  toDelete.parentNode.removeChild(toDelete);
+}
+</script>
+
+</body>
+</html>
